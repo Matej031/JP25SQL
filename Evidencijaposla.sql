@@ -6,28 +6,28 @@ create table radnici(
     sifra int not null primary key auto_increment,
     ime varchar (50) not null,
     prezime varchar (50) not null,
-    email varchar (50) not null,
-    klijenti int,
-    rokovi int
+    email varchar (50) not null
 );
 
-create table Klijenti(
+create table partneri(
     sifra int not null primary key auto_increment,
     naziv varchar (50) not null,
     email varchar (50) not null,
-    rokovi int
+    rokovi int,
+    radnici int
 );
 
 create table rokovi(
     sifra int not null primary key auto_increment,
     datum_primitka datetime,
-    datum_zavrsetka datetime
+    datum_zavrsetka datetime,
+    partneri int
 );
 
-alter table radnici add foreign key (klijenti) references klijenti(sifra);
-alter table radnici add foreign key (rokovi) references rokovi(sifra);
+alter table partneri add foreign key (rokovi) references rokovi(sifra);
+alter table partneri add foreign key (radnici) references radnici(sifra);
 
-alter table klijenti add foreign key (rokovi) references rokovi(sifra);
+alter table rokovi add foreign key (partneri) references partneri(sifra);
 
 insert into radnici(sifra,ime,prezime,email)
 values
@@ -37,7 +37,7 @@ values
 (null,'Ante','Antunović','anteantunovic@gmail.com'),
 (null,'Juraj','Križanić','jurajkrizanic@gmail.com');
 
-insert into klijenti(sifra,naziv,email)
+insert into partneri(sifra,naziv,email)
 values
 (null,'nike','nike@gmail.com'),
 (null,'adidas','adidas@gmail.com'),
@@ -52,10 +52,3 @@ values
 (null,'2021-01-01','2021-03-31'),
 (null,'2021-01-01','2021-03-31'),
 (null,'2021-01-01','2021-03-31');
-
-
-
-
-
-
-
